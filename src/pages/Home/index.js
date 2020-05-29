@@ -13,6 +13,7 @@ import {
   Loading,
   Form,
   SearchBtn,
+  ErrorMessage,
 } from './styles'
 
 function Home() {
@@ -23,6 +24,7 @@ function Home() {
   const [display, setDisplay] = useState('none')
   const [inputPoke, setInputPoke] = useState('')
   const [pokeId, setPokeId] = useState(0)
+  const [textBtnSeach, SetTextBtnSeach] = useState('Buscar')
 
   const { pokemon, pokeSelected, pokeDetails, pokeImageId, offset, loading, errorStatus } = useSelector(state => ({
     pokemon: state.pokemonReducer.pokemon,
@@ -71,7 +73,12 @@ function Home() {
 
   const onSearchPoke = (event) => {
     event.preventDefault()
+    SetTextBtnSeach('...')
     dispatch(getPokemon(offset, inputPoke))
+
+    setTimeout(() => {
+      SetTextBtnSeach('Buscar')
+    }, 200);
   }
 
   if (loading)
@@ -88,13 +95,13 @@ function Home() {
             value={inputPoke}
             onChange={(e) => onChangeInput(e.target.value)}
           />
-          <SearchBtn type="submit" value="Buscar" />
+          <SearchBtn type="submit" value={textBtnSeach} />
         </Form>
       </SectionSearch>
 
       <SectionListPokemon>
         {errorStatus !== ''
-          ? <h1>Nenhum pokemon encontrado :(</h1>
+          ? <ErrorMessage>Nenhum pokemon encontrado :(</ErrorMessage>
           : pokemon.map((poke, i) => {
             return (
               <PokeCard

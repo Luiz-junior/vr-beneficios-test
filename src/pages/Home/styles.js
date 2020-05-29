@@ -23,6 +23,10 @@ export const SectionListPokemon = styled.section`
   width: 90%;
   padding: 20px 0px;
 `
+export const ErrorMessage = styled.strong`
+  color: red;
+`
+
 export const SectionSearch = styled.section`
   padding: 20px 20px;
   
@@ -44,6 +48,13 @@ export const SearchBtn = styled.input`
   background: #8BBE8A;
   color: #fff;
   margin-left: 5px;
+  outline: none;
+  transition: ease-in-out .3s;
+  width: 60px;
+
+  &:active {
+    background-color: green;
+  }
 `
 
 export const InputSearchPokemon = styled.input`
