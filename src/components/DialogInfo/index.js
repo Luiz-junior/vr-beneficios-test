@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+import iconClose from '../../assets/img/close.png'
 import {
   DialogInfoContainer,
   CloseDialog,
@@ -10,11 +11,11 @@ import {
   BaseStatsText,
   TotalIncreaseText,
   SectionAbilities,
-  AbilityName
+  AbilityName,
+  IconClose,
 } from './styles'
 
 function DialogInfo({ pokeDetails, transition, maxHeight, opacity, onCloseDialog }) {
-
   let [pokeStats, setPokeStats] = useState([])
 
   useEffect(() => {
@@ -34,6 +35,7 @@ function DialogInfo({ pokeDetails, transition, maxHeight, opacity, onCloseDialog
 
   return (
     <DialogInfoContainer style={{ transition, maxHeight }}>
+      <IconClose src={iconClose} alt="icon close" onClick={() => onCloseDialog()} />
       <CloseDialog onClick={() => onCloseDialog()}>
         <span className="close-dialog" style={{ transition: 'opacity .2s ease-in-out', opacity }}></span>
       </CloseDialog>

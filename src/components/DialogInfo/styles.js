@@ -14,6 +14,13 @@ export const DialogInfoContainer = styled.div`
   align-items: center;
   overflow: hidden;
   z-index: 1;
+  
+  @media (min-width: 768px) {
+    left: 25%;
+    top: 40%;
+    width: 50%;
+    border-radius: 20px;
+  }
 
   .text-message {
     color: #444;
@@ -35,8 +42,30 @@ export const CloseDialog = styled.section`
     left: 0;
     right: 0;
     margin: 0 auto;
+    display: block;
+
+    @media (min-width: 768px) {
+    display: none;
+    }
   }
 `
+export const IconClose = styled.img`
+  width: 25px;
+  position: absolute;
+  display: none;
+  top: 3%;
+
+  @media (min-width: 768px) {
+    display: block;
+    left: 93%;
+    
+  }
+
+  @media (min-width: 1024px) {
+    left: 95%;
+  }
+`
+
 export const DialogDetails = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,6 +83,10 @@ export const IncreaseContainer = styled.div`
   width: 75vw;
   padding: 5px 0;
   color: #333;
+
+  @media (min-width: 768px) {
+    width: 40vw;
+  }
 `
 
 export const TotalIncreaseText = styled.span`
