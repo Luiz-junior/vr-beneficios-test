@@ -14,9 +14,9 @@ const initialState = {
 export function pokemonReducer(state = initialState, action) {
   switch (action.type) {
     case GET_POKEMON:
-      return { ...state, pokemon: action.pokemon, loading: false }
+      return { ...state, pokemon: action.pokemon, loading: false, errorStatus: action.errorStatus }
     case GET_POKEMON_BY_PARAM:
-      return { ...state, pokemon: [action.pokemon], loading: false }
+      return { ...state, pokemon: [action.pokemon], loading: false, errorStatus: action.errorStatus }
     case GET_POKEMON_DETAILS:
       return { ...state, pokemonDetails: action.pokemonDetails, pokeImageId: action.pokeImageId, loading: false }
     case SET_OFFSET:

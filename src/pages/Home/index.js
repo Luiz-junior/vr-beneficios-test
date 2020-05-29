@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getPokemon, getPokemonByParams, getPokemonDetails } from '../../store/action/pokemonAction';
+import { getPokemon, getPokemonDetails } from '../../store/action/pokemonAction';
 import PokeCard from '../../components/PokeCard';
 import DialogInfo from '../../components/DialogInfo';
 import Pagination from '../../components/Pagination';
@@ -24,13 +24,14 @@ function Home() {
   const [inputPoke, setInputPoke] = useState('')
   const [pokeId, setPokeId] = useState(0)
 
-  const { pokemon, pokeSelected, pokeDetails, pokeImageId, offset, loading } = useSelector(state => ({
+  const { pokemon, pokeSelected, pokeDetails, pokeImageId, offset, loading, errorStatus } = useSelector(state => ({
     pokemon: state.pokemonReducer.pokemon,
     pokeSelected: state.pokemonReducer.pokeSelected,
     pokeDetails: state.pokemonReducer.pokemonDetails,
     pokeImageId: state.pokemonReducer.pokeImageId,
     offset: state.pokemonReducer.offset,
     loading: state.pokemonReducer.loading,
+    errorStatus: state.pokemonReducer.errorStatus
   }));
 
   useEffect(() => {
@@ -71,7 +72,6 @@ function Home() {
   const onSearchPoke = (event) => {
     event.preventDefault()
     dispatch(getPokemon(offset, inputPoke))
-    //dispatch(getPokemonByParams(inputPoke))
   }
 
   if (loading)
@@ -93,18 +93,21 @@ function Home() {
       </SectionSearch>
 
       <SectionListPokemon>
-        {pokemon.map((poke, i) => {
-          return (
-            <PokeCard
-              key={i}
-              poke={poke}
-              pokeId={pokeImageId[i]}
-              details={pokeDetails[i]}
-              index={i}
-              onOpenDialog={onOpenDialog}
-            />
-          )
-        })}
+        {errorStatus !== ''
+          ? <h1>Nenhum pokemon encontrado :(</h1>
+          : pokemon.map((poke, i) => {
+            return (
+              <PokeCard
+                key={i}
+                poke={poke}
+                pokeId={pokeImageId[i]}
+                details={pokeDetails[i]}
+                index={i}
+                onOpenDialog={onOpenDialog}
+              />
+            )
+          })
+        }
       </SectionListPokemon>
       <Pagination />
       <DialogInfo
