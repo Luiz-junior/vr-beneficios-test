@@ -16,7 +16,7 @@ export function pokemonReducer(state = initialState, action) {
     case GET_POKEMON:
       return { ...state, pokemon: action.pokemon, loading: false }
     case GET_POKEMON_BY_PARAM:
-      return { ...state, pokeSelected: [action.pokeSelected], loading: false }
+      return { ...state, pokemon: [action.pokemon], loading: false }
     case GET_POKEMON_DETAILS:
       return { ...state, pokemonDetails: action.pokemonDetails, pokeImageId: action.pokeImageId, loading: false }
     case SET_OFFSET:

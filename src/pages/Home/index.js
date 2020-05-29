@@ -9,8 +9,6 @@ import {
   ListContainer,
   SectionSearch,
   SectionListPokemon,
-  Title,
-  Description,
   InputSearchPokemon,
   Loading,
   Form,
@@ -44,15 +42,12 @@ function Home() {
 
   useEffect(() => {
     if (pokemon.length > 0) {
-      let pokeDetails = [];
-      let idImage = [];
+      let pokeDetailsIdImg = { pokeDetails: [], idImage: [] }
 
-      if (pokeSelected < 1) {
-        pokemon.map(poke => { dispatch(getPokemonDetails(poke.url, idImage, pokeDetails)) })
+      if (pokemon.length > 1) {
+        pokemon.map(poke => { dispatch(getPokemonDetails(poke.url, pokeDetailsIdImg)) })
       } else {
-        pokeSelected.map(poke => {
-          dispatch(getPokemonDetails(poke.forms[0].url, idImage, pokeDetails))
-        })
+        pokemon.map(poke => { dispatch(getPokemonDetails(poke.url, pokeDetailsIdImg, poke.id)) })
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,17 +65,13 @@ function Home() {
     setOpacity(0)
     setDisplay('none')
   }
-  /* const onSearchPoke = (pokeName) => {
-    setInputPoke(pokeName)
 
-    let poke = pokemon.filter(poke => poke.name == pokeName)
-    setPokeSelect(poke)
-  } */
   const onChangeInput = param => { setInputPoke(param) }
 
   const onSearchPoke = (event) => {
     event.preventDefault()
-    dispatch(getPokemonByParams(inputPoke))
+    dispatch(getPokemon(offset, inputPoke))
+    //dispatch(getPokemonByParams(inputPoke))
   }
 
   if (loading)
@@ -102,8 +93,8 @@ function Home() {
       </SectionSearch>
 
       <SectionListPokemon>
-        {pokeSelected.length < 1
-          ? pokemon.map((poke, i) => (
+        {pokemon.map((poke, i) => {
+          return (
             <PokeCard
               key={i}
               poke={poke}
@@ -112,23 +103,12 @@ function Home() {
               index={i}
               onOpenDialog={onOpenDialog}
             />
-          ))
-          : (
-            <PokeCard
-              poke={pokeSelected[0]}
-              pokeId={pokeImageId[0]}
-              details={pokeSelected[0]}
-              onOpenDialog={onOpenDialog}
-            />
           )
-        }
+        })}
       </SectionListPokemon>
       <Pagination />
       <DialogInfo
-        pokeDetails={pokeSelected.length < 1
-          ? pokeDetails.filter(poke => poke.id === pokeId)
-          : pokeSelected.filter(poke => poke.id === pokeId)
-        }
+        pokeDetails={pokeDetails.filter(poke => poke.id === pokeId)}
         transition='max-height .2s ease-in-out'
         maxHeight={maxHeight}
         opacity={opacity}

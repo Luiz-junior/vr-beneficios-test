@@ -1,4 +1,4 @@
-### GR Git Test
+### VR Benefícios Teste
 
 Primeiro baixe as dependências do projeto com o comando:
 
